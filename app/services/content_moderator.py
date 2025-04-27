@@ -1,3 +1,4 @@
+import os
 from openai import OpenAI
 from typing import TypedDict, Literal
 import json
@@ -56,9 +57,21 @@ async def check_prompt_safety(prompt: str) -> ModerationResult:
         ModerationResult: Dictionary containing video safety assessment
     """
     try:
+        # Get API configuration from environment variables
+        api_key = os.getenv("GROQ_API_KEY")
+        api_url = os.getenv("GROQ_API_URL", "https://api.groq.com/openai/v1")
+        
+        if not api_key:
+            logger.error("GROQ_API_KEY environment variable not set")
+            return {
+                "is_safe": False,
+                "reason": "Content moderation service unavailable - defaulting to unsafe",
+                "risk_level": "CRITICAL"
+            }
+            
         client = OpenAI(
-            base_url="https://api.groq.com/openai/v1", 
-            api_key="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"
+            base_url=api_url,
+            api_key=api_key
         )
         
         logger.info(f"Checking safety for prompt: '{prompt}'")

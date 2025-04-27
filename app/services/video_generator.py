@@ -15,8 +15,8 @@ from app.schemas.video import VideoGenerationResponse, VideoStyle
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Base URL for the video generation API
-BASE_URL = "https://sahaniji-instant-video.hf.space"
+# Get base URL from environment variables
+BASE_URL = os.getenv("VIDEO_SOURCE_URL")
 
 # Styles that need special handling (append to prompt, empty style parameter)
 SPECIAL_STYLES = {
