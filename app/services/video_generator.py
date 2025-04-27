@@ -39,6 +39,7 @@ def create_safe_filename(prompt: str) -> str:
 def process_prompt_and_style(prompt: str, style: Optional[str] = None) -> tuple[str, str]:
     """
     Process the prompt and style. For special styles, append style to prompt and use "Realistic" as base style.
+    For supported styles (3D, Anime, Realistic), use them directly.
     
     Returns:
         tuple[str, str]: (processed_prompt, style_to_use)
@@ -49,8 +50,9 @@ def process_prompt_and_style(prompt: str, style: Optional[str] = None) -> tuple[
     # Capitalize first letter of style
     style = style[0].upper() + style[1:] if style else "Anime"
     
-    # For special styles, append to prompt and use "Realistic" as base style
-    if style in SPECIAL_STYLES:
+    # For special styles (anything other than 3D, Anime, Realistic)
+    # append to prompt and use "Realistic" as style
+    if style not in ["3D", "Anime", "Realistic"]:
         return f"{prompt}, {style} style", "Realistic"
         
     # For supported styles (3D, Anime, Realistic), return as is
