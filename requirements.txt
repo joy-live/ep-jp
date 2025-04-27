@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-dotenv
+aiohttp
+discord.py
+openai
+pydantic
+python-multipart
+typing-extensions
